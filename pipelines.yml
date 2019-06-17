@@ -2,9 +2,9 @@ resources:
   - name:       Git1
     type:       GitRepo
     configuration:
-      gitProvider:  github-disha
-      repository:   github-disha
-      path:         dishameswania/ArtifactoryTest
+      gitProvider:  balajis1
+      repository:   12345
+      path:         balajils1/12345
     buildOn:
       commit: true     
 

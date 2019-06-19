@@ -45,3 +45,4 @@ pipelines:
           inputSteps:
             - name: build_mvn
           outputResources:
+            - name: build_info

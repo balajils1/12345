@@ -41,7 +41,7 @@ pipelines:
         type: PublishBuildInfo
         configuration:
           integrations:
-            - name: art
+            - name: Art1
           inputSteps:
             - name: build_mvn
           outputResources:

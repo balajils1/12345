@@ -9,7 +9,7 @@ resources:
   - name: project_example
     type: GitRepo
     configuration:
-      gitProvider:  balajils1
+      gitProvider:  balaji
       path: balajils1/project-examples
  
 pipelines:

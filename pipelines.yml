@@ -7,7 +7,7 @@ resources:
       buildNumber: 1
       
   - name: project_example
-    type: GitRepo
+    type: GitHub
     configuration:
       gitProvider:  balaji
       path: balajils1/project-examples

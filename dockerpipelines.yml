@@ -40,7 +40,7 @@ pipelines:
           dockerImageName: 35.244.19.217:8081/docker/ragesh
           dockerImageTag: $pipeline_name.$run_number
           inputResources:
-            - name: dockerbuild_repo
+            - name: docker-local
             #- name: docker_image
             - name: files
             - name: dh_image

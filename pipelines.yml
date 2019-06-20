@@ -44,6 +44,7 @@ pipelines:
             - buildDir=$(eval echo "$"res_"$inputGitRepoResourceName"_resourcePath)/$sourceLocation
             - echo "[MvnBuild] Changing directory $buildDir"
             - pushd "$buildDir"
+            - ls
             - |
               if [ ! -z "$inputFileResourceName" ]; then
                 filePath=$(eval echo "$"res_"$inputFileResourceName"_resourcePath)/*

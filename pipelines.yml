@@ -7,7 +7,7 @@ resources:
       buildNumber: 1
       
   - name: project_example
-    type: GitHub
+    type: GitRepo
     configuration:
       gitProvider:  balaji
       path: balajils1/project-examples
@@ -20,8 +20,8 @@ pipelines:
         configuration:
           sourceLocation: ./artifactory-maven-plugin-example
           mvnCommand: clean install -f ./pom.xml
-          configFileLocation: project-examples/artifactory-maven-plugin-example/
-          configFileName: ./mvn-art-config
+          configFileLocation: project-examples/artifactory-maven-plugin-example
+          configFileName: mvn-art-config
           inputResources:
             - name: project_example
           integrations:

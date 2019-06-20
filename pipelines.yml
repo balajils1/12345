@@ -36,26 +36,5 @@ pipelines:
           onStart:
             - javac -version
             - mvn --version
-            - sourceLocation=$(jq -r ".step.configuration.sourceLocation" $step_json_path)
-            - configFileLocation=$(jq -r ".step.configuration.configFileLocation" $step_json_path)
-            - configFileName=$(jq -r ".step.configuration.configFileName" $step_json_path)
-            - scan=$(jq -r ".step.configuration.forceXrayScan" $step_json_path)
-            - publish=$(jq -r ".step.configuration.autoPublishBuildInfo" $step_json_path)
-            - buildDir=$(eval echo "$"res_"$inputGitRepoResourceName"_resourcePath)/$sourceLocation
-            - echo "[MvnBuild] Changing directory $buildDir"
-            - pushd "$buildDir"
-            - ls
-            - |
-              if [ ! -z "$inputFileResourceName" ]; then
-                filePath=$(eval echo "$"res_"$inputFileResourceName"_resourcePath)/*
-                echo "[MvnBuild] Copying files from: $filePath to: $(pwd)"
-                # todo: remove -v
-                cp -vr $filePath .
-              fi
-            - mvnCommand=$(jq -r ".step.configuration.mvnCommand" $step_json_path)
-            - mvnCommand=$(eval echo "$mvnCommand")
-            - echo "[MvnBuild] Building module with mvnCommand $mvnCommand"
-            - echo $configFileLocation/"$configFileName"
-            - ls $configFileLocation
-            - ls $configFileName
+            
 

@@ -23,7 +23,7 @@ pipelines:
             image:
               custom:
                 name: drydock/u18java
-                tag: v0.9.0
+                tag: master
           sourceLocation: ./artifactory-maven-plugin-example
           mvnCommand: clean install -f ./pom.xml
           configFileLocation: .

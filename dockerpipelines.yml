@@ -15,7 +15,7 @@ resources:
   - name: dockerbuild_repo
     type: GitRepo
     configuration:
-      path: Sampleproject
+      path: Sampleproject/Dockerfile
       gitProvider: balaji
   - name: docker_build_info
     type: BuildInfo

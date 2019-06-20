@@ -10,12 +10,12 @@ resources:
     configuration:
       registry: art
       sourceRepository: docker
-      imageName: mill.jfrog.info:12052/docker/busybox
+      imageName: 35.244.19.217:8081/docker/busybox
       imageTag: latest
   - name: dockerbuild_repo
     type: GitRepo
     configuration:
-      path: skylark05/dockerbuild
+      path: sampleproject/DockerBuild
       gitProvider: github
   - name: docker_build_info
     type: BuildInfo
@@ -37,7 +37,7 @@ pipelines:
         configuration:
           dockerFileLocation: .
           dockerFileName: Dockerfile
-          dockerImageName: mill.jfrog.info:12052/docker/ragesh
+          dockerImageName: 35.244.19.217:8081/docker/ragesh
           dockerImageTag: $pipeline_name.$run_number
           inputResources:
             - name: dockerbuild_repo

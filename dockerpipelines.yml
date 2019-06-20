@@ -8,7 +8,7 @@ resources:
   - name: docker_image
     type: Image
     configuration:
-      registry: art
+      registry: Art1
       sourceRepository: docker
       imageName: 35.244.19.217:8081/docker/busybox
       imageTag: latest

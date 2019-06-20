@@ -16,17 +16,17 @@ resources:
     type: GitRepo
     configuration:
       path: Sampleproject/
-      gitProvider: github
+      gitProvider: balaji
   - name: docker_build_info
     type: BuildInfo
     configuration:
-      sourceArtifactory: art
+      sourceArtifactory: Art1
       buildName: docker_example
       buildNumber: 1
   - name: files
     type: FileSpec
     configuration:
-      sourceArtifactory: art
+      sourceArtifactory: Art1
       pattern: ragesh-generic/*.txt
       
 pipelines:

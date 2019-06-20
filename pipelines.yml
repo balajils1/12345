@@ -42,7 +42,7 @@ pipelines:
             - scan=$(jq -r ".step.configuration.forceXrayScan" $step_json_path)
             - publish=$(jq -r ".step.configuration.autoPublishBuildInfo" $step_json_path)
             - buildDir=$(eval echo "$"res_"$inputGitRepoResourceName"_resourcePath)/$sourceLocation
-            - echo "[MvnBuild] Changing directory: $buildDir"
+            - echo "[MvnBuild] Changing directory\: $buildDir"
             - pushd "$buildDir"
             - |
               if [ ! -z "$inputFileResourceName" ]; then

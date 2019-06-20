@@ -27,7 +27,7 @@ resources:
     type: FileSpec
     configuration:
       sourceArtifactory: Art1
-    #  pattern: ragesh-generic/*.txt
+      pattern: abc-generic/*.txt
       
 pipelines:
   - name: docker_example

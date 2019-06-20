@@ -1,0 +1,67 @@
+resources:
+  - name: dh_image
+    type: Image
+    configuration:
+      registry: dockerhub
+      imageName: busybox
+      imageTag: latest
+  - name: docker_image
+    type: Image
+    configuration:
+      registry: art
+      sourceRepository: docker
+      imageName: mill.jfrog.info:12052/docker/busybox
+      imageTag: latest
+  - name: dockerbuild_repo
+    type: GitRepo
+    configuration:
+      path: skylark05/dockerbuild
+      gitProvider: github
+  - name: docker_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: art
+      buildName: docker_example
+      buildNumber: 1
+  - name: files
+    type: FileSpec
+    configuration:
+      sourceArtifactory: art
+      pattern: ragesh-generic/*.txt
+      
+pipelines:
+  - name: docker_example
+    steps:
+      - name: build_docker
+        type: DockerBuild
+        configuration:
+          dockerFileLocation: .
+          dockerFileName: Dockerfile
+          dockerImageName: mill.jfrog.info:12052/docker/ragesh
+          dockerImageTag: $pipeline_name.$run_number
+          inputResources:
+            - name: dockerbuild_repo
+            #- name: docker_image
+            - name: files
+            - name: dh_image
+          #integrations:
+          #  - name: art
+      #- name: push_docker_image
+      #  type: PushArtifactoryPackage
+      #  configuration:
+      #    targetRepo: docker
+      #    integrations:
+      #      - name: art
+      #    inputSteps:
+      #      - name: build_docker
+      #- name: publish_docker_build
+      #  type: PublishBuildInfo
+      #  configuration:
+      #    integrations:
+      #      - name: art
+      #   inputSteps:
+      #      - name: push_docker_image
+      #    outputResources:
+      #      - name: docker_build_info
+
+

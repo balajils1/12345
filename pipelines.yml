@@ -18,6 +18,12 @@ pipelines:
       - name: build_mvn
         type: MvnBuild
         configuration:
+          runtime:
+            type: image
+            image:
+              custom:
+                name: drydock/u18java
+                tag: master
           sourceLocation: ./artifactory-maven-plugin-example
           mvnCommand: clean install -f ./pom.xml
           configFileLocation: .

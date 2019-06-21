@@ -27,7 +27,7 @@ resources:
     type: FileSpec
     configuration:
       sourceArtifactory: Art1
-      pattern: abc-generic/*.txt
+      pattern: generic-local/*
       
 pipelines:
   - name: docker_example

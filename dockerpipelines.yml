@@ -47,7 +47,7 @@ pipelines:
           integrations:
             - name: Art1
       - name: push_docker_image
-        type: PushArtifactoryPackage
+        type: DockerPush
         configuration:
           targetRepo: docker
           integrations:

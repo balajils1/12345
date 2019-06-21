@@ -49,7 +49,7 @@ pipelines:
       - name: push_docker_image
         type: DockerPush
         configuration:
-          targetRepo: docker
+          targetRepository: docker
           integrations:
             - name: Art1
           inputSteps:

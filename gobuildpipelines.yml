@@ -47,7 +47,7 @@ pipelines:
       - name: push_go_binary
         type: GoPublishBinary
         configuration:
-          targetRepositor: generic-local
+          targetRepository: generic-local
           integrations:
             - name: Art1
           inputSteps:

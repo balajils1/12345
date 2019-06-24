@@ -55,8 +55,8 @@ pipelines:
       - name: publish_go_build
         type: PublishBuildInfo
         configuration:
-          integrations:
-            - name: Art1
+          #integrations:
+            #- name: Art1
           inputSteps:
             - name: push_go_binary
           outputResources:

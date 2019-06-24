@@ -37,7 +37,7 @@ pipelines:
             - name: artifactory_go_example
             - name: files
           integrations:
-            - name: art
+            - name: Art1
         execution:
           onStart:
             #- wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz

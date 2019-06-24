@@ -14,7 +14,7 @@ resources:
     type: FileSpec
     configuration:
       sourceArtifactory: Art1
-      pattern: generic-local/*.txt
+      pattern: generic-local/*
  
 pipelines:
   - name: go_example_build

@@ -3,7 +3,7 @@ resources:
     type: Image
     configuration:
       registry: dockerhub
-      imageName: busybox
+      imageName: nginx
       imageTag: latest
   - name: docker_image
     type: Image
@@ -37,7 +37,7 @@ pipelines:
         configuration:
           dockerFileLocation: .
           dockerFileName: Dockerfile
-          dockerImageName: 35.244.19.217:8081/docker/ragesh
+          dockerImageName: 35.244.19.217:8081/docker/balaji
           dockerImageTag: $pipeline_name.$run_number
           inputResources:
             - name: dockerbuild_repo

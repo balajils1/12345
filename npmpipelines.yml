@@ -33,7 +33,7 @@ pipelines:
      # - name: publish_npm
        # type: NpmPublish
        # configuration:
-          repositoryName: npm-local
+          #repositoryName: npm-local
           inputSteps:
             - name: build_npm
           integrations:

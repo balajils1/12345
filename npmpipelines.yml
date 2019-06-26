@@ -32,7 +32,7 @@ pipelines:
             - name: Art1
      # - name: publish_npm
        # type: NpmPublish
-        configuration:
+       # configuration:
           repositoryName: npm-local
           inputSteps:
             - name: build_npm

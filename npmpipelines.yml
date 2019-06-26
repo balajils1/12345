@@ -4,7 +4,7 @@ resources:
     configuration:
       path: balajils1/12345
       gitProvider: github
-  - name: helloworld_build_info
+  - name: balaji
     type: BuildInfo
     configuration:
       sourceArtifactory: Art1

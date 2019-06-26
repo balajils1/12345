@@ -31,7 +31,7 @@ pipelines:
           integrations:
             - name: Art1
      # - name: publish_npm
-        type: NpmPublish
+       # type: NpmPublish
         configuration:
           repositoryName: npm-local
           inputSteps:

@@ -16,13 +16,6 @@ pipelines:
     steps:
       - name: build_npm
         type: NpmBuild
-       # configuration:
-          #runtime:
-           # type: image
-           # image:
-             # custom:
-                #name: drydock/u16node
-                #tag: master
         configuration:
           repositoryName: npm-local
           sourceLocation: .
@@ -43,7 +36,7 @@ pipelines:
         configuration:
           inputSteps:
             - name: publish_npm
-          #integrations:
-          #  - name: Art1
+          integrations:
+            - name: Art1
           outputResources:
             - name: helloworld_build_info

@@ -3,8 +3,8 @@ resources:
     type: GitRepo
     configuration:
       path: balajils1/12345
-      gitProvider: github
-  - name: balaji
+      gitProvider: balaji
+  - name: helloworld_build_info
     type: BuildInfo
     configuration:
       sourceArtifactory: Art1

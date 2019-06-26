@@ -30,7 +30,7 @@ pipelines:
             - name: npmHelloWorld_repo
           integrations:
             - name: Art1
-      - name: publish_npm
+     # - name: publish_npm
         type: NpmPublish
         configuration:
           repositoryName: npm-local

@@ -21,8 +21,8 @@ pipelines:
           sourceLocation: .
           inputResources:
             - name: npmHelloWorld_repo
-        #  integrations:
-         #   - name: Art1
+          integrations:
+            - name: Art1
       - name: publish_npm
         type: NpmPublish
         configuration:

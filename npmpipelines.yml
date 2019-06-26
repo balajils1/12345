@@ -17,6 +17,13 @@ pipelines:
       - name: build_npm
         type: NpmBuild
         configuration:
+          runtime:
+            type: image
+            image:
+              custom:
+                name:drydock/u16node
+                tag: master
+        configuration:
           repositoryName: npm-local
           sourceLocation: .
           inputResources:

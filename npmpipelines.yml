@@ -30,10 +30,10 @@ pipelines:
             - name: npmHelloWorld_repo
           integrations:
             - name: Art1
-     # - name: publish_npm
-       # type: NpmPublish
-       # configuration:
-          #repositoryName: npm-local
+      - name: publish_npm
+        type: NpmPublish
+        configuration:
+          repositoryName: npm-local
           inputSteps:
             - name: build_npm
           integrations:

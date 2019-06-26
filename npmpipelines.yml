@@ -20,9 +20,9 @@ pipelines:
           repositoryName: npm-local
           sourceLocation: .
           inputResources:
-            - name: helloworld_build_info
-          integrations:
-            - name: Art1
+            - name: npmHelloWorld_repo
+        #  integrations:
+         #   - name: Art1
       - name: publish_npm
         type: NpmPublish
         configuration:

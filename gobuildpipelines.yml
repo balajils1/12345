@@ -44,13 +44,13 @@ pipelines:
             - sudo tar -C /usr/local -xzf go1.12.5.linux-amd64.tar.gz
             - export PATH=$PATH:/usr/local/go/bin
             - go version
-     - name: scan
-       type: XrayScan
-       configuration:
+      - name: scan
+        type: XrayScan
+        configuration:
           #inherits from bash
-         inputResources:
-           - name: go_build_info
-             trigger: true
+          inputResources:
+            - name: go_build_info
+              trigger: true
           waitUntilFinish: true  # default true
              # required
       - name: push_go_binary

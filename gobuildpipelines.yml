@@ -15,7 +15,12 @@ resources:
     configuration:
       sourceArtifactory: Art1
       pattern: generic-local/*
-
+  - name: scanbuild
+    type: BuildInfo
+    configuration:
+      sourceArtifactory:    Art1
+      buildName:  go_example_build
+      buildNumber:  4
  
 pipelines:
   - name: go_example_build
@@ -62,12 +67,6 @@ pipelines:
             - name: push_go_binary
           outputResources:
             - name: go_build_info
-      - name: scanbuild
-        type: BuildInfo
-        configuration:
-        sourceArtifactory:    Art1
-           buildName:  go_example_build
-           buildNumber:  4
      - name: Xray
        steps:
          - name: scan

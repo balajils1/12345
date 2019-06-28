@@ -61,13 +61,13 @@ pipelines:
             - name: push_go_binary
           outputResources:
             - name: go_build_info
-     - name: Xray
-       steps:
-         - name: scan
-           type: XrayScan
-           configuration:
+  - name: Xray
+    steps:
+      - name: scan
+        type: XrayScan
+        configuration:
           #inherits from bash
-             waitUntilFinish: true  # default true
-             inputResources:
-             - name: go_build_info         # required
-                 trigger: false
+           waitUntilFinish: true  # default true
+        inputResources:
+          - name: go_build_info         # required
+            trigger: false

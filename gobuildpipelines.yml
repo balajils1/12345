@@ -61,8 +61,6 @@ pipelines:
             - name: push_go_binary
           outputResources:
             - name: go_build_info
-  - name: Xray
-    steps:
       - name: scan
         type: XrayScan
         configuration:

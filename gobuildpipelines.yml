@@ -69,6 +69,6 @@ pipelines:
           #inherits from bash
           inputResources:
             - name: go_build_info
-           waitUntilFinish: true  # default true
+          waitUntilFinish: true  # default true
          # required
             trigger: false

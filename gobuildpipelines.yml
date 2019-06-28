@@ -9,12 +9,13 @@ resources:
     configuration:
       sourceArtifactory: Art1
       buildName: go_example_build
-      buildNumber: 1
+      buildNumber: 4
   - name: files
     type: FileSpec
     configuration:
       sourceArtifactory: Art1
       pattern: generic-local/*
+
  
 pipelines:
   - name: go_example_build
@@ -61,3 +62,19 @@ pipelines:
             - name: push_go_binary
           outputResources:
             - name: go_build_info
+      - name: scanbuild
+        type: BuildInfo
+        configuration:
+        sourceArtifactory:    Art1
+           buildName:  go_example_build
+           buildNumber:  4
+     - name: Xray
+       steps:
+         - name: scan
+           type: XrayScan
+           configuration:
+          #inherits from bash
+             waitUntilFinish: true  # default true
+             inputResources:
+             - name: scanbuild         # required
+                 trigger: false

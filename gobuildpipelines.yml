@@ -67,7 +67,8 @@ pipelines:
         type: XrayScan
         configuration:
           #inherits from bash
+          inputResources:
+            - name: go_build_info
            waitUntilFinish: true  # default true
-        inputResources:
-          - name: go_build_info         # required
+         # required
             trigger: false

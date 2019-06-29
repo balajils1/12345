@@ -21,7 +21,7 @@ resources:
     type: BuildInfo
     configuration:
       sourceArtifactory: Art1
-      buildName: docker_example
+      buildName: docker_test
       buildNumber: 1
   - name: files
     type: FileSpec

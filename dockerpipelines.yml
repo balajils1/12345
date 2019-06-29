@@ -66,7 +66,7 @@ pipelines:
       - name: scan
         type: XrayScan
         configuration:
-          #inherits from bash
+           #inherits from bash
           inputResources:
             - name: docker_build_info
               trigger: true

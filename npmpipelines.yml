@@ -40,3 +40,11 @@ pipelines:
            # - name: Art1
           outputResources:
             - name: helloworld_build_info
+            - name: scan
+        type: XrayScan
+        configuration:
+           #inherits from bash
+          inputResources:
+            - name: helloworld_build_info
+              trigger: true
+          waitUntilFinish: true

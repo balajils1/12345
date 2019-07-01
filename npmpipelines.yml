@@ -17,7 +17,7 @@ pipelines:
       - name: build_npm
         type: NpmBuild
         configuration:
-          repositoryName: npm-local
+          repositoryName: npm
           sourceLocation: .
           inputResources:
             - name: npmHelloWorld_repo

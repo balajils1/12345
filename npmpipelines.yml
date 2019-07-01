@@ -40,7 +40,7 @@ pipelines:
            # - name: Art1
           outputResources:
             - name: helloworld_build_info
-       - name: scan
+      - name: scan
         type: XrayScan
         configuration:
            #inherits from bash

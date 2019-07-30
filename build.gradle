@@ -1,0 +1,235 @@
+apply plugin: 'project-report'
+apply plugin: 'io.spring.javaformat'
+
+
+buildscript {
+	repositories {
+		maven {
+			name 'GSEP Artifactory'
+			credentials {
+				username "$gsepMavenUser"
+				password "$gsepMavenPassword"
+			}
+			url "http://35.244.19.217:8081/artifactory/gradle-dev/"
+		}
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "io.spring.javaformat:spring-javaformat-gradle-plugin:${springFormatVersion}"
+        
+	}
+}
+
+version '1.3.1-SNAPSHOT'
+
+subprojects {
+	buildscript {
+		repositories {
+			maven {
+				name 'GSEP Artifactory'
+				credentials {
+					username "$gsepMavenUser"
+					password "$gsepMavenPassword"
+				}
+				url "http://35.244.19.217:8081/artifactory/gradle-dev/"
+			}
+		}
+		dependencies {
+			classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+			classpath "io.spring.javaformat:spring-javaformat-gradle-plugin:${springFormatVersion}"
+           
+		}
+	}
+
+	apply from: "${rootProject.projectDir}/gradle/repo.gradle"
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'jacoco'
+	apply plugin: 'checkstyle'
+	apply plugin: 'io.spring.javaformat'
+
+
+	idea {
+		module {
+			downloadJavadoc = true
+			downloadSources = true
+		}
+	}
+
+	group = 'com.daimler.ds'
+	version = rootProject.version
+	sourceCompatibility = 1.8
+
+	afterEvaluate { project ->
+		gsep.addMavenRepo(project.repositories)
+		gsep.addMavenRepo(project.buildscript.repositories)
+	}
+
+	dependencies {
+		testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+		testCompile("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+		testCompile("org.mockito:mockito-core:${mockitoVersion}")
+		testCompile("ch.qos.logback:logback-classic:${logbackVersion}")
+		checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:${springFormatVersion}")
+	}
+
+	checkstyle {
+		toolVersion = "8.18"
+		ignoreFailures = true
+	}
+	checkstyleTest.enabled = true
+
+	test {
+		useJUnitPlatform()
+		reports.html.enabled = true
+		reports.junitXml.enabled = true
+		failFast = false
+	}
+
+	task showRepos {
+		doLast {
+			println "Project repos:"
+			println repositories.collect { it.name }
+			println "Project buildscript repos:"
+			println buildscript.repositories.collect { it.name }
+		}
+	}
+}
+
+task testReport(type: TestReport) {
+	destinationDir = file("$buildDir/reports/allTests")
+	// Include the results from the `test` task in all subprojects
+	reportOn subprojects*.test
+}
+
+task jacocoMainMerge(type: JacocoMerge) {
+	destinationFile = file("$buildDir/jacoco/test.exec")
+	subprojects.each { subproject ->
+		executionData subproject.tasks.withType(Test)
+	}
+	doFirst {
+		executionData = files(executionData.findAll { it.exists() })
+	}
+}
+
+task jacocoMainReport(type: JacocoReport) {
+	group 'daimler'
+	description = 'Generates an aggregate report from all subprojects'
+	dependsOn subprojects*.test, jacocoMainMerge
+
+	def srcDirs = []
+	def outputDirs = []
+
+	subprojects.each { subproject ->
+		srcDirs += subproject.sourceSets.main.allSource.srcDirs
+		outputDirs += subproject.sourceSets.main.output
+	}
+	additionalSourceDirs = files(srcDirs)
+	sourceDirectories = files(srcDirs)
+	classDirectories = files(outputDirs)
+	executionData jacocoMainMerge.destinationFile
+	reports {
+		html.enabled = true
+	}
+}
+
+htmlDependencyReport.projects = project.allprojects
+
+task buildAll() {
+	group 'daimler'
+	dependsOn(':testrunner:build')
+	dependsOn(':testrunnerclient:build')
+	dependsOn(':testrunnerclient-servicebroker:build')
+	dependsOn(':omadmclient-parrot:build')
+	dependsOn('buildOsgiSimulator')
+}
+
+task buildOsgiSimulator(type: GradleBuild) {
+	group 'daimler'
+	buildFile = 'omadmclient-osgi/build.gradle'
+	tasks = ['clean', 'dist']
+	if (rootProject.gradle.startParameter.taskNames.contains('test')) {
+		logger.debug "Run OSGi Simulator tests."
+		tasks += 'test'
+	}
+	startParameter.projectProperties.put('gsepDeveloperBuild', 'false')
+}
+
+def testRunnerCopySpec = copySpec {
+	from("${project(':testrunner').projectDir}/build/libs") {
+		include "testrunner-*.jar"
+	}
+	into "testrunner"
+}
+
+def testRunnerClientCopySpec = copySpec {
+	from("${project(':testrunnerclient').projectDir}/build/libs") {
+		include "testrunnerclient-*.jar"
+	}
+	into "testrunnerclient"
+}
+
+def testRunnerClientServiceBrokerCopySpec = copySpec {
+	from("${project(':testrunnerclient-servicebroker').projectDir}/build/libs") {
+		include "testrunnerclient-servicebroker-*.jar"
+	}
+	into "testrunnerclient-servicebroker"
+}
+
+def osgiSimulatorCopySpec = copySpec {
+	from "omadmclient-osgi/build/install/daimler-osgi-simulator"
+	into "daimler-osgi-simulator"
+}
+
+def parrotSimulatorCopySpec = copySpec {
+	from("${project(':omadmclient-parrot').projectDir}/build/libs") {
+		include "omadmclient-parrot-*.jar"
+		rename("omadmclient-parrot-(.+).jar", "omadmclient-parrot.jar")
+	}
+	into "daimler-parrot-simulator"
+}
+
+def parrotSimulatorDeveloperCopySpec = copySpec {
+	from("${project(':omadmclient-parrot').projectDir}/src/main/resources/developer")
+	into "daimler-parrot-simulator"
+}
+
+task distAll(type: Copy) {
+	group 'daimler'
+	dependsOn('buildAll')
+	with osgiSimulatorCopySpec
+	with parrotSimulatorCopySpec
+	with testRunnerClientCopySpec
+	with testRunnerClientServiceBrokerCopySpec
+	with testRunnerCopySpec
+	if (project.gsepDeveloperBuild) {
+		with {
+			println "Developer Build"
+			with parrotSimulatorDeveloperCopySpec
+		}
+	}
+	//into "${project.buildDir}/devicesimulator-${project.version}-${new Date().format('yyyyMMdd-HHmmss')}"
+	into "${project.buildDir}/dist"
+}
+
+task zipAll(type: Zip) {
+	group 'daimler'
+	dependsOn('distAll')
+	baseName = "daimler-devicesimulator-testrunner-${project.version}"
+	from("${project.buildDir}/dist") {
+		include "**/*"
+	}
+	destinationDir = project.buildDir
+}
+
+task allJavadoc(type: Javadoc) {
+	group 'daimler'
+	//noinspection GroovyAssignabilityCheck
+	source subprojects.collect { p -> p.sourceSets.main.allJava }
+	classpath = files(subprojects.collect { p -> p.sourceSets.main.compileClasspath })
+	destinationDir = file("${project.buildDir}/docs/javadoc")
+}
+
+task clean(type: Delete) {
+	delete project.buildDir
+}

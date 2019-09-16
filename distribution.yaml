@@ -1,0 +1,65 @@
+resources:
+  - name: build_info_nuget
+    type: BuildInfo
+    configuration:
+      sourceArtifactory:    artdisha
+      buildName:            nugetTry
+      buildNumber:          1
+​
+  - name:       release_bundle
+    type:       ReleaseBundle
+    configuration:
+      sourceArtifactory:    artdisha
+      name:                 release2
+      version:              1.0.0
+      isSigned:             false
+      
+  - name:       release_bundle_new
+    type:       ReleaseBundle
+    configuration:
+      sourceArtifactory:    artdisha
+      name:                 release2
+      version:              1.0.0
+      isSigned:             true
+      
+  - name:           Rule1
+    type:           DistributionRule
+    configuration:
+      sourceArtifactory:    artdisha
+      serviceName:          A*
+      siteName:             *
+      cityName:             *
+      countryCodes:
+        - *
+     
+      
+pipelines:
+  - name:    distribute
+    steps:
+      - name: sign
+        type: SignReleaseBundle
+        configuration:
+          inputResources:
+            - name:            release_bundle 
+              trigger: true
+          outputResources:
+            - name:            release_bundle_new
+      - name: my_distribute
+        type: DistributeReleaseBundle
+        configuration:
+          dryRun: false
+          inputResources:
+            - name: release_bundle_new
+              trigger: false
+            - name: Rule1
+              trigger: true
+ 
+        execution:
+          onStart:
+            - echo "Preparing for work...."
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"
+          onComplete: #always
+            - echo "Cleaning up some stuff"

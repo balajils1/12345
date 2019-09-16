@@ -82,10 +82,10 @@ pipelines:
             type: SignReleaseBundle
             configuration:
             inputResources:
-      - name:   release_bundle 
-              trigger: true
-          outputResources:
-            - name:            release_bundle_new
+              - name:   release_bundle 
+                trigger: true
+            outputResources:
+              - name:   release_bundle_new
       - name: my_distribute
         type: DistributeReleaseBundle
         configuration:

@@ -32,8 +32,8 @@ resources:
     configuration:
       sourceArtifactory:    Art1
       serviceName:          A*
-      siteName:             M*
-      cityName:             *
+      siteName:             A*
+      cityName:             A*
       countryCodes:
         - *
      

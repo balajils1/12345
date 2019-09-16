@@ -32,7 +32,7 @@ resources:
     configuration:
       sourceArtifactory:    Art1
       serviceName:          A*
-      siteName:             *
+      siteName:             M*
       cityName:             *
       countryCodes:
         - *
